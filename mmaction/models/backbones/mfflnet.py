@@ -149,7 +149,7 @@ class ResidualAttentionBlock(BaseModule):
         logger.info(f'Drop path rate: {drop_path}')
 
         self.no_mffl = no_mffl
-        logger.info(f'No L_MHRA: {no_mffl}')
+        logger.info(f'No MFFL: {no_mffl}')
         if not no_mffl:
             self.mffl = MFFL(d_model, dw_reduction=dw_reduction)
 
