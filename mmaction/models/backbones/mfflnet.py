@@ -438,15 +438,14 @@ class MFFLNet(BaseModule):
         x = self.conv1(x)  # shape = [*, width, grid, grid]
         N, C, T, H, W = x.shape
         x = x.permute(0, 2, 3, 4, 1).reshape(N * T, H * W, C)
-
+        x = x.permute(1, 0, 2)  # NLD -> LND
+        
         x = torch.cat([
             self.class_embedding.to(x.dtype) + torch.zeros(
                 x.shape[0], 1, x.shape[-1], dtype=x.dtype, device=x.device), x
         ],
-            dim=1)  # shape = [*, grid ** 2 + 1, width]
-        x = x + self.positional_embedding.to(x.dtype)
+            dim=0)  # shape = [grid ** 2 + 1, *, width]
+        x = x + self.positional_embedding.to(x.dtype).unsqueeze(1)
         x = self.ln_pre(x)
-
-        x = x.permute(1, 0, 2)  # NLD -> LND
         out = self.transformer(x)
         return out
