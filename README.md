@@ -13,9 +13,7 @@
     pip install -U openmim
     mim install mmengine==0.10.5
     mim install mmcv==2.2.0
-    mim install mmdet  # 可选
-    mim install mmpose  # 可选
-    git clone https://github.com/YSZ20011009/MFFLNet.git
+    git clone https://github.com/ysz20011009/MFFLNet.git
     cd MFFLNet
     pip install -v -e .
     pip install pytorchvideo==0.1.5
